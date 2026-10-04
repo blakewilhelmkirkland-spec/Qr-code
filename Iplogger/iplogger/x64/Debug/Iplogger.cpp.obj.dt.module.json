@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "Iplogger\\x64\\Debug\\Iplogger.obj",
+            "outputs": [
+                "Iplogger\\x64\\Debug\\Iplogger.cpp.obj.dt.module.json",
+                "Iplogger\\x64\\Debug\\Iplogger.cpp.obj.dt.d.json"
+            ],
+            "requires": []
+        }
+    ]
+}

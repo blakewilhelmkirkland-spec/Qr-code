@@ -1,0 +1,36 @@
+services:
+  iplogger:
+    build: .
+    image: iplogger:latest
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      # Override to use Postgres by uncommenting:
+      # DATABASE_URL: postgresql+asyncpg://iplogger:iplogger@postgres:5432/iplogger
+      DATABASE_URL: ${DATABASE_URL:-sqlite+aiosqlite:///./data/iplogger.db}
+    volumes:
+      - iplogger-data:/app/data
+      # Mount GeoLite2 if you have it:
+      # - ./GeoLite2-City.mmdb:/geoip/GeoLite2-City.mmdb:ro
+    # GEOIP_DB: /geoip/GeoLite2-City.mmdb
+
+  # Optional Postgres
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    profiles: ["postgres"]
+    environment:
+      POSTGRES_USER: iplogger
+      POSTGRES_PASSWORD: iplogger
+      POSTGRES_DB: iplogger
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  iplogger-data:
+  pg-data:
